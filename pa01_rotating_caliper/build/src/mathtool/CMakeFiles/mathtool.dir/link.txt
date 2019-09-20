@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc libmathtool.a  CMakeFiles/mathtool.dir/Basic.cpp.o CMakeFiles/mathtool.dir/Quaternion.cpp.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib libmathtool.a
