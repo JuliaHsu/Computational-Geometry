@@ -72,7 +72,7 @@ void hull2d(ply_vertex * s, ply_vertex * e, list<ply_vertex*>& hull )
       --top;
     }
     D[++top] = v;
-    cout<<i<<"\n";
+    
     // for(int k =0; k<=(top-bot);k++){
     //   cout<<D[bot+k]->getPos()<<"\n";
     // }
