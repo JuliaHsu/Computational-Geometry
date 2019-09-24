@@ -31,85 +31,86 @@ bbox2d::bbox2d(const c_polygon & poly)
 
 }
 
-double dot(Vector2d v, Vector2d dif){
-  return v[0]*dif[0]+v[1]*dif[1];
-}
+
 
 obb bbox2d::build(bbox2d_problem & problem)
 {
   mathtool::Vector2d v,n; //the calipers, v & n are perpendicular
   int e[4]; //vertex indices of extreme points
   float a[4]; //angles between the calipers and the polygon edges
+  int minA =0;
+  for(int i =0;i<m_chull.size();i++){
+    cout<<m_chull[i]<<"\n";
+  }
+  //1. initialize v so it is parallel to an edge and then determine n
+  //e0
+  v = Vector2d(m_chull[1]-m_chull[0]);
+  
+  v = v.normalize();
+  // v & n are perpendicular
+  n = Vector2d(-v[1],v[0]);
+  cout<<"v= "<<v<<"\n";
+  cout<<"n= "<<n<<"\n";
+  vector<mathtool::Point2d> newHull = m_chull;
+  Point2d origin = m_chull[0];
+  Vector2d dif;
+  for (int i =0;i<m_chull.size();i++){
+    dif= Vector2d(m_chull[i]-origin);
+    newHull[i] = Vector2d(v[0]*dif[0]+v[1]*dif[1],n[0]*dif[0]+n[1]*dif[1]);
+  }
+  cout<<"new hull"<<"\n";
+  for(int i =0;i<m_chull.size();i++){
+    cout<<newHull[i]<<"\n";
+  }
+  cout<<"----------\n";
 //Find vertex indices of extreme points 
-  // e[0]: max X
-  // e[1]: min X
-  // e[2]: max Y
-  // e[3]: min Y
+  // e[0]: max v
+  // e[1]: min v
+  // e[2]: max n
+  // e[3]: min n
+  //initialize extreme point to the first vertex of convex hull
+  //2. init extreme points e[4] using v & n, compute angles a[4]
   for (int i=0;i<4;i++){
     e[i] = 0;
   }
-  for (int x =1; x<m_chull.size();x++){
+  for (int i =1; i<newHull.size();i++){
     
-    if (m_chull[x][0]>m_chull[e[0]][0] || 
-    (m_chull[x][0] == m_chull[e[0]][0] && m_chull[x][1]>m_chull[e[0]][1])){
+    if (newHull[i][0]>newHull[e[0]][0] || 
+    (newHull[i][0] == newHull[e[0]][0] && newHull[i][1]>newHull[e[0]][1])){
       //maxX = m_chull[x][0];
-      //index of vertex that have maximum value of x
-      e[0]= x;
+      //index of vertex that have maximum value of v
+      e[0]= i;
     }
-    if(m_chull[x][0]<m_chull[e[1]][0]||
-    (m_chull[x][0] == m_chull[e[1]][0] && m_chull[x][1]<m_chull[e[1]][1])){
+    if(newHull[i][0]<newHull[e[1]][0]||
+    (newHull[i][0] == newHull[e[1]][0] && newHull[i][1]<newHull[e[1]][1])){
       //minX = m_chull[x][0];
-      //index of vertex that have minimum value of x
-      e[1]= x;
+      //index of vertex that have minimum value of v
+      e[1]= i;
     }
   }
 
-  for (int y =1; y<m_chull.size();y++){
-    if (m_chull[y][1]>m_chull[e[2]][1]||
-    (m_chull[y][1] == m_chull[e[2]][1] && m_chull[y][0]>m_chull[e[2]][0])){
+  for (int j =1; j<newHull.size();j++){
+    if (newHull[j][1]>newHull[e[2]][1]||
+    (newHull[j][1] == newHull[e[2]][1] && newHull[j][0]>newHull[e[2]][0])){
       //maxY = m_chull[y][1];
-      //index of vertex that have maximum value of y
-      e[2] = y;
+      //index of vertex that have maximum value of n
+      e[2] = j;
     }
-    if(m_chull[y][1]<m_chull[e[3]][1]||
-    (m_chull[y][1] == m_chull[e[3]][1] && m_chull[y][0]<m_chull[e[3]][0])){
+    if(newHull[j][1]<newHull[e[3]][1]||
+    (newHull[j][1] == newHull[e[3]][1] && newHull[j][0]<newHull[e[3]][0])){
       //minY = m_chull[y][1];
-      //index of vertex that have minimum value of y
-      e[3] = y;
+      //index of vertex that have minimum value of n
+      e[3] = j;
     }
   }
+  cout<<"extreme point:\n";
+  for (int i =0;i<4;i++){
+    cout<<m_chull[e[i]]<<" new: "<<newHull[e[i]]<<"\n";
+  }
+  m_chull = newHull;
+  //index of the vector that has the smallest angle
+  minA = findAngles(e,a,v,n);
   
-
-  //1. initialize v so it is parallel to an edge and then determine n
-  
-  // m_chull[e[0]]: the extreme point of convex hull with maximum value of x
-  // (m_chull[e[0]+1],m_chull[e[0]]) : the edge that contains m_chull[e[0]] as a start point
-   v = Vector2d(m_chull[e[0]+1]-m_chull[e[0]]);
-   v = v.normalize();
-   // v & n are perpendicular
-   n = Vector2d(-v[1],v[0]);
-  cout<<"v= "<<v<<"\n";
-  cout<<"n= "<<n<<"\n";
-  cout<<"extreme points\n";
-  for(int i=0;i<4;i++){
-    cout<<m_chull[e[i]]<<"\n";
-  }
-  cout<<"---------------\n";
-  //2. init extreme points e[4] using v & n, compute angles a[4]
-  Point2d origin = m_chull[e[0]];
-  Vector2d newEp[4];
-  for(int i=0;i<4;i++){
-    Vector2d dif= Vector2d(m_chull[e[i]]-origin);
-    newEp[i] = Vector2d(dot(v,dif),dot(n,dif));
-   
-
-    findAngles(e,a,v,n);
-  }
-  for(int i =0;i<4;i++){
-    m_chull[e[i]] =  newEp[i];
-    cout<<m_chull[e[i]]<<"\n";
-  }
-
   //3. iteratively update extreme points
   for(int i=0;i<m_chull.size();i++)
   {
@@ -136,8 +137,26 @@ obb bbox2d::build(bbox2d_problem & problem)
 int bbox2d::findAngles
 (int e[4], float a[4], const mathtool::Vector2d& v, const mathtool::Vector2d& n)
 {
+  float minA;
+  int i;
+  Vector2d v0 = m_chull[e[0]+1] - m_chull[e[0]];
+  a[0] = abs(v0[0]*n[0]+v0[1]*n[1]);
+  Vector2d v1 = m_chull[e[1]+1] - m_chull[e[1]];
+  a[1] = abs(v1[0]*n[0]+v1[1]*n[1]);
+  Vector2d v2 =m_chull[e[2]+1] - m_chull[e[2]];
+  a[2] = abs(v2[0]*v[0]+v2[1]*v[1])/v2.norm();
+  Vector2d v3 =m_chull[e[3]+1] - m_chull[e[3]];
+  a[3] = abs(v3[0]*v[0]+v3[1]*v[1])/v3.norm();
+  minA = a[0];
+  i=0;
+  for(int k =0;k<4;k++){
+    if(a[k]<minA){
+      minA = a[k];
+      i=k;
+    }
+  }
 
-  return 0;
+  return i;
 }
 
 obb bbox2d::createOBB(int e[4],const mathtool::Vector2d& v, const mathtool::Vector2d& n)

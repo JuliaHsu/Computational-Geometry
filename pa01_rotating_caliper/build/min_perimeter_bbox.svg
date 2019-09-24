@@ -1,6 +1,6 @@
 <?xml version="1.0" standalone="no" ?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="31.8198px" height="31.8198px" xmlns="http://www.w3.org/2000/svg" version="1.1" >
-	<path d = "M14.9099,16.9099 L14.9099,16.9099 L14.9099,16.9099 L14.9099,16.9099 z" fill="rgb(255,255,0)" stroke-width="0.5" stroke="rgb(0,0,0)" />
-	<path d = "M9.9099,21.9099 L19.9099,21.9099 L14.9099,16.9099 L24.9099,6.9099 L9.9099,11.9099 z" fill="rgb(192,192,192)" stroke-width="0.5" stroke="rgb(0,0,0)" />
+<svg width="17.6777px" height="17.6777px" xmlns="http://www.w3.org/2000/svg" version="1.1" >
+	<path d = "M3.83883,13.8388 L3.83883,13.8388 L3.83883,13.8388 L3.83883,13.8388 z" fill="rgb(255,255,0)" stroke-width="0.5" stroke="rgb(0,0,0)" />
+	<path d = "M3.83883,13.8388 L13.8388,13.8388 L8.83883,8.83883 L13.8388,3.83883 L3.83883,3.83883 z" fill="rgb(192,192,192)" stroke-width="0.5" stroke="rgb(0,0,0)" />
 </svg>

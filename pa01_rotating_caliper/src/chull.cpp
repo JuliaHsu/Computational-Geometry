@@ -38,7 +38,7 @@ void hull2d(ply_vertex * s, ply_vertex * e, list<ply_vertex*>& hull )
  
 
   // initialize a deque D[] from bottom to top so that the
-  // 1st three vertices of P[] are a ccw triangle
+
   ply_vertex** D = new ply_vertex*[2*n+1];
   int bot = n-2, top = bot+3;
   D[bot] = D[top] = s->getNext()->getNext();
