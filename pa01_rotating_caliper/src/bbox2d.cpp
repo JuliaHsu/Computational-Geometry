@@ -39,18 +39,15 @@ obb bbox2d::build(bbox2d_problem & problem)
   int e[4]; //vertex indices of extreme points
   float a[4]; //angles between the calipers and the polygon edges
   int minA =0;
-  for(int i =0;i<m_chull.size();i++){
-    cout<<m_chull[i]<<"\n";
-  }
+
   //1. initialize v so it is parallel to an edge and then determine n
   //e0
   v = Vector2d(m_chull[1]-m_chull[0]);
-  
   v = v.normalize();
   // v & n are perpendicular
   n = Vector2d(-v[1],v[0]);
-  cout<<"v= "<<v<<"\n";
-  cout<<"n= "<<n<<"\n";
+  // cout<<"v= "<<v<<"\n";
+  // cout<<"n= "<<n<<"\n";
   vector<mathtool::Point2d> newHull = m_chull;
   Point2d origin = m_chull[0];
   Vector2d dif;
@@ -58,11 +55,7 @@ obb bbox2d::build(bbox2d_problem & problem)
     dif= Vector2d(m_chull[i]-origin);
     newHull[i] = Vector2d(v[0]*dif[0]+v[1]*dif[1],n[0]*dif[0]+n[1]*dif[1]);
   }
-  cout<<"new hull"<<"\n";
-  for(int i =0;i<m_chull.size();i++){
-    cout<<newHull[i]<<"\n";
-  }
-  cout<<"----------\n";
+
 //Find vertex indices of extreme points 
   // e[0]: max v
   // e[1]: min v
@@ -103,10 +96,7 @@ obb bbox2d::build(bbox2d_problem & problem)
       e[3] = j;
     }
   }
-  cout<<"extreme point:\n";
-  for (int i =0;i<4;i++){
-    cout<<m_chull[e[i]]<<" new: "<<newHull[e[i]]<<"\n";
-  }
+  
   m_chull = newHull;
   //index of the vector that has the smallest angle
   minA = findAngles(e,a,v,n);
@@ -115,10 +105,18 @@ obb bbox2d::build(bbox2d_problem & problem)
   for(int i=0;i<m_chull.size();i++)
   {
     //3.1 create a box from v,n,e[4]
+    obb box = createOBB(e,v,n);
+    // transform the corner to x-y coordinate
+    for (int i =0;i<4;i++){
+      double x = box.corners[i][0]*v[0] + box.corners[i][1] * n[0] + origin[0];
+      double y = box.corners[i][0]*v[1] + box.corners[i][1]* n[1]+ origin[1];
+      box.corners[i] = Vector2d(x,y);
+    }
     //3.2 check if this box solve the problem (use problem.solved)
+    problem.solved(box);
+
     //no need to update the m_chull again
-    if(i==e[0]|| i==e[1]||i==e[2] ||i==e[3])
-      continue;
+    
     //3.3 update v,n,e[4],a[4]
   }
 
@@ -139,14 +137,30 @@ int bbox2d::findAngles
 {
   float minA;
   int i;
-  Vector2d v0 = m_chull[e[0]+1] - m_chull[e[0]];
-  a[0] = abs(v0[0]*n[0]+v0[1]*n[1]);
-  Vector2d v1 = m_chull[e[1]+1] - m_chull[e[1]];
-  a[1] = abs(v1[0]*n[0]+v1[1]*n[1]);
-  Vector2d v2 =m_chull[e[2]+1] - m_chull[e[2]];
-  a[2] = abs(v2[0]*v[0]+v2[1]*v[1])/v2.norm();
-  Vector2d v3 =m_chull[e[3]+1] - m_chull[e[3]];
-  a[3] = abs(v3[0]*v[0]+v3[1]*v[1])/v3.norm();
+  Vector2d vec[4];
+  for(int i=0;i<2;i++){
+    // compute cosine theta to sort the angles
+   
+    if(i<=1){
+      // e[0] & e[1] are the max/ min of v, compute the angle between the vector and n
+      // take the absolute value of cosine theta (because there're two vectors n and -n)
+      vec[i] = m_chull[e[i]+1] - m_chull[e[i]];
+      a[i] = abs(vec[i][0]*n[0]+vec[i][1]*n[1])/vec[i].norm();
+    }
+    else{
+      // e[1] & e[2] are the max/ min of n, compute the angle between the vector and v
+      vec[i] =m_chull[e[i]+1] - m_chull[e[i]];
+      a[i] = abs(vec[i][0]*v[0]+vec[i][1]*v[1])/vec[i].norm();
+    }
+  }
+  // Vector2d v0 = m_chull[e[0]+1] - m_chull[e[0]];
+  // a[0] = abs(v0[0]*n[0]+v0[1]*n[1])/v0.norm();
+  // Vector2d v1 = m_chull[e[1]+1] - m_chull[e[1]];
+  // a[1] = abs(v1[0]*n[0]+v1[1]*n[1])/v1.norm();
+  // Vector2d v2 =m_chull[e[2]+1] - m_chull[e[2]];
+  // a[2] = abs(v2[0]*v[0]+v2[1]*v[1])/v2.norm();
+  // Vector2d v3 =m_chull[e[3]+1] - m_chull[e[3]];
+  // a[3] = abs(v3[0]*v[0]+v3[1]*v[1])/v3.norm();
   minA = a[0];
   i=0;
   for(int k =0;k<4;k++){
@@ -162,8 +176,22 @@ int bbox2d::findAngles
 obb bbox2d::createOBB(int e[4],const mathtool::Vector2d& v, const mathtool::Vector2d& n)
 {
   obb box;
-
+  
   //TODO: build a box from e, the extreme points, v and n
+  // e[0]: max v
+  // e[1]: min v
+  // e[2]: max n
+  // e[3]: min n
+  //lower-left corner
+  box.corners[0] = Point2d(m_chull[e[1]][0],m_chull[e[3]][1]);
+  //lower-right
+  box.corners[1] = Point2d(m_chull[e[0]][0],m_chull[e[3]][1]);
+  //upper-right
+  box.corners[2] = Point2d(m_chull[e[0]][0],m_chull[e[2]][1]);
+  //upper-left
+  box.corners[3] = Point2d(m_chull[e[1]][0],m_chull[e[2]][1]);
+  box.height = m_chull[e[0]][0]-m_chull[e[1]][0];
+  box.width = m_chull[e[2]][1]-m_chull[e[3]][1];
 
   return box;
 }
