@@ -106,7 +106,7 @@ obb bbox2d::build(bbox2d_problem & problem)
   }
   Vector2d Eperp;
   Vector2d zero = Vector2d(0,0);
-  for(int i =0;i<4;i++){
+  for(int i =0;i<2;i++){
     if(e[i] == m_chull.size()-1){
       vec[i] = newHull[1] - newHull[0];
     }
