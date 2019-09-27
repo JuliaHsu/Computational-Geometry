@@ -68,10 +68,7 @@ obb bbox2d::build(bbox2d_problem & problem)
   }
 
 //Find vertex indices of extreme points 
-  // e[0]: max v
-  // e[1]: min v
-  // e[2]: max n
-  // e[3]: min n
+
   //initialize extreme point to the first vertex of convex hull
   //2. init extreme points e[4] using v & n, compute angles a[4]
   for (int i=0;i<4;i++){
@@ -100,13 +97,14 @@ obb bbox2d::build(bbox2d_problem & problem)
     }
   }
 
+
   cout<<"extreme points:\n";
   for(int i=0;i<4;i++){
     cout<<"e[i]= "<<e[i]<<", point:"<<newHull[e[i]]<<"\n";
   }
   Vector2d Eperp;
   Vector2d zero = Vector2d(0,0);
-  for(int i =0;i<2;i++){
+  for(int i =0;i<4;i++){
     if(e[i] == m_chull.size()-1){
       vec[i] = newHull[1] - newHull[0];
     }
@@ -114,7 +112,6 @@ obb bbox2d::build(bbox2d_problem & problem)
       vec[i] = newHull[e[i]+1] - newHull[e[i]];
     }
     
-    //cout<<"vec: "<<vec[i]<<", ";
 
   
     Eperp = Vector2d(-vec[i][1],vec[i][0]);
@@ -139,7 +136,7 @@ obb bbox2d::build(bbox2d_problem & problem)
   int idxA, tmp;
   float tmpA;
   Vector2d Vn,Nn;
-  for(int i=0;i<3;i++)
+  for(int i=0;i<m_chull.size();i++)
   {
   
   //   //3.1 create a box from v,n,e[4]
