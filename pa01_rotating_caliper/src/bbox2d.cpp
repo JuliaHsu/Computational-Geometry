@@ -68,13 +68,11 @@ obb bbox2d::build(bbox2d_problem & problem)
   }
 
 //Find vertex indices of extreme points 
-
   //initialize extreme point to the first vertex of convex hull
   //2. init extreme points e[4] using v & n, compute angles a[4]
   for (int i=0;i<4;i++){
     e[i] = 1;
   }
-
   for (int i =0; i<newHull.size()-1;i++){
     
     if (newHull[i][0]>newHull[e[1]][0] || 
@@ -96,14 +94,14 @@ obb bbox2d::build(bbox2d_problem & problem)
       e[3]= i;
     }
   }
-
-
-  cout<<"extreme points:\n";
-  for(int i=0;i<4;i++){
-    cout<<"e[i]= "<<e[i]<<", point:"<<newHull[e[i]]<<"\n";
-  }
+  //m_chull = newHull;
+  // cout<<"extreme points:\n";
+  // for(int i=0;i<4;i++){
+  //   cout<<"e[i]= "<<e[i]<<", point:"<<newHull[e[i]]<<"\n";
+  // }
   Vector2d Eperp;
   Vector2d zero = Vector2d(0,0);
+  //compute angles
   for(int i =0;i<4;i++){
     if(e[i] == m_chull.size()-1){
       vec[i] = newHull[1] - newHull[0];
@@ -112,20 +110,21 @@ obb bbox2d::build(bbox2d_problem & problem)
       vec[i] = newHull[e[i]+1] - newHull[e[i]];
     }
     
+    //cout<<"vec: "<<vec[i]<<", ";
 
   
     Eperp = Vector2d(-vec[i][1],vec[i][0]);
-    if(i<=1){
+    if(i%2 == 1){
       a[i] = ((n*Eperp) * (n*Eperp))/ (Eperp.norm()* Eperp.norm());
       //a[i] = abs(vec[i][0]*n[0]+vec[i][1]*n[1])/vec[i].norm();
-      cout<<a[i]<<", ";
+      //cout<<a[i]<<", ";
     }
     else{
       // cosine theta
       // |v|^2 sin^2
        a[i] = ((v*Eperp) * (v*Eperp))/ (Eperp.norm()* Eperp.norm());
        //a[i] = abs(vec[i][0]*v[0]+vec[i][1]*v[1])/vec[i].norm();
-       cout<<a[i]<<", ";
+       //cout<<a[i]<<", ";
     }
   }
   
@@ -161,8 +160,11 @@ obb bbox2d::build(bbox2d_problem & problem)
   // }
     minA = findAngles(e,a,v,n);
     //cout<<"dist: "<<(m_chull[19]-m_chull[18]).norm();
-    cout<<"minA: "<<minA<<", "<<a[minA]<<"\n";
-    
+    cout<<"minA: "<<a[minA]<<"\n";
+    // if((m_chull[e[minA]+2]-m_chull[e[minA]+1]).norm()<=0.09){
+    //   a[minA] = 1000;
+    //   minA = findAngles(e,a,v,n);
+    // }
     
     // //check duplicate vertex
     // for(int i=0;i<4;i++){
@@ -264,15 +266,13 @@ obb bbox2d::build(bbox2d_problem & problem)
         //the extreme point is on v
         a[i] = ((n*Eperp) * (n*Eperp))/ (Eperp.norm()* Eperp.norm());
         //a[i] = abs(vec[i]*n)/vec[i].norm();
-        //cout<<"the extreme point is on v\n";
-        cout<<"a= "<<a[i]<<", ";
+        cout<<"the extreme point is on v\n";
       }
       
       else if(eps[i][1]==minN || eps[i][1]== maxN){
         //a[i] = abs(vec[i]*v)/vec[i].norm();
         a[i] = ((v*Eperp) * (v*Eperp))/ (Eperp.norm()* Eperp.norm());
-       // cout<<"the extreme point is on n\n";
-       cout<<"a= "<<a[i]<<", ";
+        cout<<"the extreme point is on n\n";
 
       }
       else{
@@ -296,21 +296,7 @@ obb bbox2d::build(bbox2d_problem & problem)
       }
     }
     cout<<"\nisInE: "<< isInE<<"\n";
-    // int temp = e[0];
-    // float tmpA = a[0];
-    // for(int i =0;i<x;i++){
-    //    temp = e[0];
-    //    tmpA=a[0];
-    //   for (int j = 0; j < 3; j++) {
-    //       e[i] = e[i + 1]; 
-    //       a[i] = a[i+1];
-    //   }
-    //    e[i] = temp; 
-    //    a[i] = tmpA;
-    
-     
-    // }
-    cout<<"end for\n";
+
   }
 
   return problem.getSolution(); //done
@@ -328,22 +314,19 @@ obb bbox2d::build(bbox2d_problem & problem)
 int bbox2d::findAngles
 (int e[4], float a[4], const mathtool::Vector2d& v, const mathtool::Vector2d& n)
 {
-  
   float minSin;
   int i;
   // maximum cosine == min angle
   minSin = a[0];
   i=0;
-  for(int k =0;k<4;k++){
-    
+  for(int k =1;k<4;k++){
     if(a[k]<minSin){
-      if((m_chull[e[k]+2]-m_chull[e[k]+1]).norm()<=0.085){
+      if((m_chull[e[k]+2]-m_chull[e[k]+1]).norm()<=0.09){
         continue;
       }
       minSin = a[k];
       i=k;
     }
-    
   }
 
 
@@ -377,7 +360,7 @@ obb bbox2d::createOBB(int e[4],const mathtool::Vector2d& v, const mathtool::Vect
   for(int i=0;i<4;i++){
     diff = Vector2d(m_chull[e[i]]-origin);
     eps[i] = Point2d(v[0]*diff[0]+v[1]*diff[1],n[0]*diff[0]+n[1]*diff[1]);
-    cout<<eps[i]<<", org: "<<m_chull[e[i]]<<"\n";
+    cout<<eps[i]<<"\n";
   }
 
   
