@@ -83,6 +83,20 @@ void hull2d(ply_vertex * s, ply_vertex * e, list<ply_vertex*>& hull )
   for(h=0;h<=(top-bot);h++){
     hull.push_back(D[bot+h]);
   }
+  // cout<<hull.size()<<"\n";
+  // for(ply_vertex* v:hull){
+  //   Vector2d v1 =v->getPos()- v->getPre()->getPos();
+  //   Vector2d v2 = v->getNext()->getPos() - v->getPos();
+  //   cout<<"v1*v2 = "<<v1*v2<<"\n";
+  //   if(v1*v2>=0.8){
+
+  //     v->getPre()->setNext(v->getNext());
+  //     v->getNext()->setPre(v->getPre());
+  //     cout<<"collinear\n";
+  //   }
+   
+  // }
+  // cout<<hull.size()<<"\n";
 
   
 

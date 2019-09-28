@@ -14,9 +14,7 @@ bbox2d::bbox2d(const c_polygon & poly)
 
   for(ply_vertex* v:hull)
   {
-    // if(v->getPos().almost_equ(v->getNext()->getPos())){
-    //   continue;
-    // }
+
     auto pos=v->getPos();
     this->m_chull.push_back(pos);
   }//end for
@@ -46,7 +44,7 @@ obb bbox2d::build(bbox2d_problem & problem)
   //1. initialize v so it is parallel to an edge and then determine n
   //e0
   v = Vector2d(m_chull[1]-m_chull[0]);
-  //v = v*100.0;
+  //v = v*10.0;
   //v = v.normalize();
   // v & n are perpendicular
   n = Vector2d(-v[1],v[0]);
@@ -61,6 +59,7 @@ obb bbox2d::build(bbox2d_problem & problem)
   //   cout<<m_chull[i]<<"\n";
   // }
   //cout<<"new hull: \n";
+  cout<<"17: "<<m_chull[17]<<", 18: "<<m_chull[18]<<", 19: "<<m_chull[19];
   for (int i =0;i<m_chull.size();i++){
     dif= Vector2d(m_chull[i]-origin);
     newHull[i] = Vector2d(v[0]*dif[0]+v[1]*dif[1],n[0]*dif[0]+n[1]*dif[1]);
@@ -95,10 +94,11 @@ obb bbox2d::build(bbox2d_problem & problem)
     }
   }
   //m_chull = newHull;
-  // cout<<"extreme points:\n";
-  // for(int i=0;i<4;i++){
-  //   cout<<"e[i]= "<<e[i]<<", point:"<<newHull[e[i]]<<"\n";
-  // }
+  cout<<"extreme points:\n";
+  for(int i=0;i<4;i++){
+    cout<<"e[i]= "<<e[i]<<", point:"<<m_chull[e[i]]<<"\n";
+  }
+  //cout<<"e[18]: "<<newHull[18]<<"\n";
   Vector2d Eperp;
   Vector2d zero = Vector2d(0,0);
   //compute angles
@@ -117,14 +117,14 @@ obb bbox2d::build(bbox2d_problem & problem)
     if(i%2 == 1){
       a[i] = ((n*Eperp) * (n*Eperp))/ (Eperp.norm()* Eperp.norm());
       //a[i] = abs(vec[i][0]*n[0]+vec[i][1]*n[1])/vec[i].norm();
-      //cout<<a[i]<<", ";
+      cout<<"a: "<<a[i]<<", ";
     }
     else{
       // cosine theta
       // |v|^2 sin^2
        a[i] = ((v*Eperp) * (v*Eperp))/ (Eperp.norm()* Eperp.norm());
        //a[i] = abs(vec[i][0]*v[0]+vec[i][1]*v[1])/vec[i].norm();
-       //cout<<a[i]<<", ";
+       cout<<"a: "<<a[i]<<", ";
     }
   }
   
@@ -140,17 +140,19 @@ obb bbox2d::build(bbox2d_problem & problem)
   
   //   //3.1 create a box from v,n,e[4]
     obb box = createOBB(e,v,n);
-    cout<< "finished building a box!\n";
+    
+   
     Vn = v.normalize();
     Nn = n.normalize();
     // transform the corner to x-y coordinate
     for (int i =0;i<4;i++){
-      double x =  box.corners[i][0]*Vn[0] + box.corners[i][1] * Nn[0] + origin[0];
-      double y = box.corners[i][0]* Vn[1] + box.corners[i][1]* Nn[1]+ origin[1];
-      box.corners[i] = Vector2d(x,y);
+      double x =  box .corners[i][0]*Vn[0] + box .corners[i][1] * Nn[0] + origin[0];
+      double y = box .corners[i][0]* Vn[1] + box .corners[i][1]* Nn[1]+ origin[1];
+      box .corners[i] = Vector2d(x,y);
     }
   //   //3.2 check if this box solve the problem (use problem.solved)
-    
+    cout<< "finished building a box!\n";
+    cout<<"---------------\n";
     problem.solved(box);
     
   //3.3 update v,n,e[4],a[4]
@@ -160,18 +162,18 @@ obb bbox2d::build(bbox2d_problem & problem)
   // }
     minA = findAngles(e,a,v,n);
     //cout<<"dist: "<<(m_chull[19]-m_chull[18]).norm();
-    cout<<"minA: "<<a[minA]<<"\n";
+    //cout<<"minA: "<<a[minA]<<"e: "<<e[minA]<<"\n";
     // if((m_chull[e[minA]+2]-m_chull[e[minA]+1]).norm()<=0.09){
     //   a[minA] = 1000;
     //   minA = findAngles(e,a,v,n);
     // }
-    
-    // //check duplicate vertex
+   
+    //check duplicate vertex
     // for(int i=0;i<4;i++){
     //   for(int j=i+1;j<4;j++){
     //     if(e[i] == e[j] && minA!=i){
-    //       // make a[i] be the minimum, so it will be skipped
-    //       a[i]=1000;
+    //       // make a[i] be the maximum, so it will be skipped
+    //       a[i]=100000;
     //       minA = findAngles(e,a,v,n);
     //     }
     //   }
@@ -181,33 +183,44 @@ obb bbox2d::build(bbox2d_problem & problem)
     //cout<<"minA = "<<m_chull[e[minA]+1]-m_chull[e[minA]]<<"\n";
     v =m_chull[e[minA]+1]-m_chull[e[minA]];
     //v = v.normalize();
+    // v = v*10;
     n = Vector2d(-v[1],v[0]);
-    // cout<<"new v: "<<v<<"\n";
-    // cout<< "new n: "<<n<<"\n";
+    cout<<"new v: "<<  e[minA]+1<<" - "<<e[minA] <<" = "<<v<<"\n";
+    cout<< "new n: "<<n<<"\n";
     origin = m_chull[e[minA]+1];
-    //cout<<"minA origin= "<<origin<<"\n";
+    cout<<"origin index= "<<e[minA]+1<<"\n";
     //cout<<"m_chull[e[minA]]: "<<m_chull[e[minA]] <<"\n";
     // //update extreme point
     cout<<"old ep index:\n";
     for(int i=0;i<4;i++){
-      cout<<e[i]<<", ";
+      cout<<e[i]<<", "<<m_chull[e[i]]<<"\n";
     }
     cout<<"\n";
     
     Vector2d tmp;
     Vector2d tmp2;
+    if(a[minA]!=0){
+      if(e[minA]==m_chull.size()-1){
+        e[minA]= 1;
+        
+      }
+      else{
+        e[minA] = e[minA]+1;
+      }
+    }
+    
     for(int i = 0;i<4; i++){  
-      
       // cout<<"a[i] = "<<a[i]<<"\n";
-      if(a[minA] == a[i]){// update the extreme points that have smallest angle
+      if(a[minA] == a[i] && i!=minA){// update the extreme points that have smallest angle
         // if((m_chull[e[i]+1]-m_chull[e[i]+2]).norm() <=1){
         //   e[i] = e[i]+2;
         // }
         
         //else{
+        
           if(e[i] == m_chull.size()-1){
-          e[i] =1;
-        }
+            e[i] =1;
+          }
           else{
             e[i] = e[i]+1; // m_chull[e[i]+1] is the end point of the edge
           }
@@ -215,7 +228,24 @@ obb bbox2d::build(bbox2d_problem & problem)
         
       }
     } 
-
+    //maintain the extreme order
+    // int key, j;  
+    // float keyA;
+    // for (int i = 1; i < 4; i++) 
+    // {  
+    //     key = e[i];  
+    //     keyA = a[i];
+    //     j = i - 1;  
+    //     while (j >= 0 && e[j] > key) 
+    //     {  
+    //         e[j + 1] = e[j];  
+    //         a[j+1] = a[j];
+    //         j = j - 1;  
+    //     }  
+    //     e[j + 1] = key;  
+    //     a[j+1] = keyA;
+    // }  
+    
     // for(int i=0;i<4;i++){
     //   if(i!=minA){
     //     if(m_chull[e[i]][0]-origin[0]<=0.1 &&
@@ -225,68 +255,68 @@ obb bbox2d::build(bbox2d_problem & problem)
     //   }
     // }
 
-    cout<<"new ep index:\n";
-    for(int i=0;i<4;i++){
-      cout<<e[i]<<", ";
-    } 
-    Vector2d eps[4];
-    Vector2d eps2[4];
+    Point2d eps[4];
+    Point2d eps2[4];
     Vector2d diff;
-    Vector2d zero = Vector2d(0,0);
-
+    
+    Vn = v.normalize();
+    Nn = n.normalize();
     // // cout<<"new extreme point:\n";
+
     for(int i=0;i<4;i++){
       diff = Vector2d(m_chull[e[i]]-origin);
-      eps[i] = Vector2d(v*diff,n*diff);
+      eps[i] = Vector2d(Vn*diff,Nn*diff);
       //cout<<eps[i];
     }
     for(int i=0;i<4;i++){
       diff = Vector2d(m_chull[e[i]+1]-origin);
-      eps2[i] = Vector2d(v*diff,n*diff);
+      eps2[i] = Vector2d(Vn*diff,Nn*diff);
       //cout<<eps2[i];
     }
     obb box2 = createOBB(e,v,n);
 
     double minV, maxV, minN,maxN;
-    minV = box2.corners[0][0] * v.norm();
-    maxV = box2.corners[2][0]*v.norm();
-    minN = box2.corners[0][1]*n.norm();
-    maxN = box2.corners[2][1]*n.norm();
-    // cout<<"min v = "<<minV<<"\n";
-    // cout<<"max v = "<<maxV<<"\n";
-    // cout<<"min n = "<<minN<<"\n";
-    // cout<<"max n = "<<maxN<<"\n";
+    minV = box2 .corners[0][0] ;
+    maxV = box2 .corners[2][0];
+    minN = box2 .corners[0][1] ;
+    maxN = box2 .corners[2][1] ;
+    cout<<"minV: "<<minV<<"\n";
+    cout<<"maxV: "<<maxV<<"\n";
+    cout<<"minN: "<<minN<<"\n";
+    cout<<"maxN:  "<<maxN<<"\n";
+
+    cout<<"new ep index:\n";
+    for(int i=0;i<4;i++){
+      cout<<e[i]<<", "<<eps[i]<<"\n";
+    } 
  
     //update angles
     for(int i =0;i<4;i++){
-      //cout<<"eps: "<<eps[i]<<"\n";
       vec[i] = eps2[i]-eps[i];
       Eperp = Vector2d(-vec[i][1],vec[i][0]);
-      if(eps[i][0] == minV || eps[i][0] == maxV){
+      
+      if(eps[i][0] == minV || eps[i][0]== maxV){
         //the extreme point is on v
         a[i] = ((n*Eperp) * (n*Eperp))/ (Eperp.norm()* Eperp.norm());
         //a[i] = abs(vec[i]*n)/vec[i].norm();
+        cout<<"a: "<<a[i]<<", ";
         cout<<"the extreme point is on v\n";
+
       }
       
-      else if(eps[i][1]==minN || eps[i][1]== maxN){
+      if(eps[i][1]==minN || eps[i][1]== maxN){
         //a[i] = abs(vec[i]*v)/vec[i].norm();
         a[i] = ((v*Eperp) * (v*Eperp))/ (Eperp.norm()* Eperp.norm());
+        cout<<"a: "<<a[i]<<", ";
         cout<<"the extreme point is on n\n";
 
       }
-      else{
-        // if(i==0){
-        //   e[0] = e[3];
-        //   a[0] = a[3];
-        // }
-        // else{
-        //   e[i] = e[i-1];
-        //   a[i] = a[i-1];
-        // }
-        
-        cout<<"else!";
-      }
+      // else{
+      //  //a[i] = ((n*Eperp) * (n*Eperp))/ (Eperp.norm()* Eperp.norm());
+      //   //a[i]=0;
+      //   cout<<"a[i]: "<<a[i];
+      //   cout<<" else!\n";
+      // }
 
     }
     bool isInE = false;
@@ -295,7 +325,7 @@ obb bbox2d::build(bbox2d_problem & problem)
         isInE = true;
       }
     }
-    cout<<"\nisInE: "<< isInE<<"\n";
+   // cout<<"\nisInE: "<< isInE<<"\n";
 
   }
 
@@ -315,15 +345,14 @@ int bbox2d::findAngles
 (int e[4], float a[4], const mathtool::Vector2d& v, const mathtool::Vector2d& n)
 {
   float minSin;
-  int i;
-  // maximum cosine == min angle
+  int i=0;
+  // while(a[i]==0 && i<4){
+  //   i++;
+  // }
+  // minSin = a[i--];
   minSin = a[0];
-  i=0;
   for(int k =1;k<4;k++){
-    if(a[k]<minSin){
-      if((m_chull[e[k]+2]-m_chull[e[k]+1]).norm()<=0.09){
-        continue;
-      }
+    if((a[k]<minSin)){
       minSin = a[k];
       i=k;
     }
@@ -339,7 +368,7 @@ obb bbox2d::createOBB(int e[4],const mathtool::Vector2d& v, const mathtool::Vect
   Vector2d diff;
   Point2d eps[4];
   Point2d origin ;
-  Vector2d zero = Vector2d(0,0);
+
   Vector2d tmp;
   //cout<<"extreme point in box\n";
   
@@ -350,17 +379,20 @@ obb bbox2d::createOBB(int e[4],const mathtool::Vector2d& v, const mathtool::Vect
     // cout<< "tmp = "<< m_chull[e[i]]-m_chull[e[i]-1]<<"\n";
     if(tmp ==v){
       origin = m_chull[e[i]];
-      //cout<<"origin: "<<origin<<"\n";
+      cout<<"origin: "<<origin<<"\n";
       
     }
     
   }
-  
-  cout<<"\nnew eps:\n";
+  Vector2d Vn= v.normalize();
+  Vector2d Nn = n.normalize();
+  //cout<<"\nnew eps:\n";
   for(int i=0;i<4;i++){
     diff = Vector2d(m_chull[e[i]]-origin);
-    eps[i] = Point2d(v[0]*diff[0]+v[1]*diff[1],n[0]*diff[0]+n[1]*diff[1]);
-    cout<<eps[i]<<"\n";
+
+    eps[i] = Point2d(Vn[0]*diff[0]+Vn[1]*diff[1],Nn[0]*diff[0]+Nn[1]*diff[1]);
+    //cout<<eps[i]<<"\n";
+    // cout<<"diff: "<<diff<<"\n";
   }
 
   
@@ -419,15 +451,15 @@ obb bbox2d::createOBB(int e[4],const mathtool::Vector2d& v, const mathtool::Vect
   
   
   //lower-left
-  box.corners[0] = Point2d(eps[minV][0]/v.norm(),eps[minN][1]/n.norm());
+  box.corners[0] = Point2d(eps[minV][0],eps[minN][1]);
   //lower-right
-  box.corners[1] = Point2d(eps[maxV][0]/v.norm(),eps[minN][1]/n.norm());
+  box.corners[1] = Point2d(eps[maxV][0],eps[minN][1]);
   //upper-right
-  box.corners[2] = Point2d(eps[maxV][0]/v.norm(),eps[maxN][1]/n.norm());
+  box.corners[2] = Point2d(eps[maxV][0],eps[maxN][1]);
   //upper-left
-  box.corners[3] = Point2d(eps[minV][0]/v.norm(),eps[maxN][1]/n.norm());
-  box.height = (eps[maxV][0]-eps[minV][0])/v.norm();
-  box.width = (eps[maxN][1]-eps[minN][1])/n.norm();
+  box.corners[3] = Point2d(eps[minV][0],eps[maxN][1]);
+  box.height = (eps[maxV][0]-eps[minV][0]);
+  box.width = (eps[maxN][1]-eps[minN][1]);
   cout<<"H= "<<box.height<<" W= "<<box.width;
   cout<<"\n";
 
