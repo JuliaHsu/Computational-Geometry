@@ -61,8 +61,6 @@ obb bbox2d::build(bbox2d_problem & problem)
     newHull[i] = Vector2d(v[0]*dif[0]+v[1]*dif[1],n[0]*dif[0]+n[1]*dif[1]);
     //cout<<newHull[i]<<"\n";
   }
-// cout<<"new:\n";
-// cout<<"17: "<<newHull[17]<<", 18: "<<newHull[18]<<", 19: "<<newHull[19];
 //Find vertex indices of extreme points 
   //initialize extreme point to the first vertex of convex hull
   //2. init extreme points e[4] using v & n, compute angles a[4]
@@ -190,14 +188,14 @@ obb bbox2d::build(bbox2d_problem & problem)
         if(minA> i){
           minA =i;
         }
-        cout<<"minA: "<<minA<<"\n";
+        
         dupMin = i;
-        cout<<"dup min: "<<dupMin<<"\n";
+       
       }
     }
     //update extreme points
     if(isDuplicate){
-      cout<< "duplicate\n";
+      
       if(e[dupMin]==m_chull.size()-1){
         e[dupMin]= 1;  
       }
@@ -210,7 +208,7 @@ obb bbox2d::build(bbox2d_problem & problem)
       cout<<e[dupMin];
     }
     else{
-      cout<<"no duplicate\n";
+    
       for(int i=0;i<4;i++){
         if(a[minA] == a[i]){
           if(e[i]==m_chull.size()-1){
@@ -278,27 +276,19 @@ obb bbox2d::build(bbox2d_problem & problem)
       if(i%2 == 1){
         a[i] = ((n*Eperp) * (n*Eperp))/ (Eperp.norm()* Eperp.norm());
         //a[i] = abs(vec[i][0]*n[0]+vec[i][1]*n[1])/vec[i].norm();
-        cout<<"a: "<<a[i]<<", ";
+        //cout<<"a: "<<a[i]<<", ";
       }
       else{
         // cosine theta
         // |v|^2 sin^2
         a[i] = ((v*Eperp) * (v*Eperp))/ (Eperp.norm()* Eperp.norm());
         //a[i] = abs(vec[i][0]*v[0]+vec[i][1]*v[1])/vec[i].norm();
-        cout<<"a: "<<a[i]<<", ";
+        //cout<<"a: "<<a[i]<<", ";
       }
       
       
 
     }
-    bool isInE = false;
-    for(int i =0;i<4;i++){
-      if(origin == m_chull[e[i]]){
-        isInE = true;
-      }
-    }
-
-
   }
 
   return problem.getSolution(); //done
@@ -345,7 +335,6 @@ obb bbox2d::createOBB(int e[4],const mathtool::Vector2d& v, const mathtool::Vect
     
     if(tmp ==v){
       origin = m_chull[e[i]];
-      cout<<"origin: "<<origin<<"\n";
       
     }
     
@@ -358,7 +347,7 @@ obb bbox2d::createOBB(int e[4],const mathtool::Vector2d& v, const mathtool::Vect
 
     eps[i] = Point2d(Vn[0]*diff[0]+Vn[1]*diff[1],Nn[0]*diff[0]+Nn[1]*diff[1]);
     //cout<<eps[i]<<"\n";
-    cout<<"diff: "<<diff<<"\n";
+    //cout<<"diff: "<<diff<<"\n";
   }
 
   
@@ -411,8 +400,8 @@ obb bbox2d::createOBB(int e[4],const mathtool::Vector2d& v, const mathtool::Vect
   box.corners[3] = Point2d(eps[minV][0],eps[maxN][1]);
   box.height = (eps[maxV][0]-eps[minV][0]);
   box.width = (eps[maxN][1]-eps[minN][1]);
-  cout<<"H= "<<box.height<<" W= "<<box.width;
-  cout<<"\n";
+  // cout<<"H= "<<box.height<<" W= "<<box.width;
+  // cout<<"\n";
 
 
   return box;
