@@ -54,6 +54,12 @@ obb bbox2d::build(bbox2d_problem & problem)
   Point2d origin = m_chull[1];
   Vector2d dif;
   Vector2d vec[4];
+  bool visited[m_chull.size()-1];
+
+  for(int i =0;i<m_chull.size()-1;i++){
+    visited[i] = false;
+  }
+  visited[0] =true;
   // cout<<"m_chull:\n";
   // for(int i =0;i<m_chull.size();i++){
   //   cout<<m_chull[i]<<"\n";
@@ -103,6 +109,7 @@ obb bbox2d::build(bbox2d_problem & problem)
   Vector2d Eperp;
   Vector2d zero = Vector2d(0,0);
 
+
   //compute angles
   for(int i =0;i<4;i++){
     if(e[i] == m_chull.size()-1){
@@ -139,7 +146,8 @@ obb bbox2d::build(bbox2d_problem & problem)
   int idxA, tmp;
   float tmpA;
   Vector2d Vn,Nn;
-  for(int i=0;i<m_chull.size();i++)
+ 
+  for(int i=0;i<1;i++)
   {
   
   //   //3.1 create a box from v,n,e[4]
@@ -185,10 +193,14 @@ obb bbox2d::build(bbox2d_problem & problem)
     
 
     //cout<<"minA = "<<m_chull[e[minA]+1]-m_chull[e[minA]]<<"\n";
+    if(visited[e[minA]]){
+      break;
+    }
     v =m_chull[e[minA]+1]-m_chull[e[minA]];
     //v = v.normalize();
     // v = v*10;
     n = Vector2d(-v[1],v[0]);
+    visited[e[minA]] = true;
     cout<<"new v: "<<  e[minA]+1<<" - "<<e[minA] <<" = "<<v<<"\n";
     cout<< "new n: "<<n<<"\n";
     origin = m_chull[e[minA]+1];
@@ -204,44 +216,143 @@ obb bbox2d::build(bbox2d_problem & problem)
     Vector2d tmp2;
     //update extreme points
     //check duplicate vertex:
+    bool isDuplicate= false;
+    int dupMin;
+    
     for(int i=0;i<4;i++){
       if(e[minA] == e[i] && minA!=i){
-        //minA must < i, only update e[i]; no change of e[minA]
-        if(e[i]==m_chull.size()-1){
-          e[i] = 1;
+        isDuplicate= true;
+        if(minA> i){
+          minA =i;
         }
-        else{
-          e[i] = e[i]+1;
-        }
+        cout<<"minA: "<<minA<<"\n";
+        dupMin = i;
+        cout<<"dup min: "<<dupMin<<"\n";
       }
-      //no duplicate vertex or there is a duplicate vertex, 
-      //but the angle is not the minimum
+    }
+    //update extreme points
+    if(isDuplicate){
+      cout<< "duplicate\n";
+      if(e[dupMin]==m_chull.size()-1){
+        e[dupMin]= 1;  
+      }
+      else if(e[dupMin]==m_chull.size()-2){
+        e[dupMin] = 0;
+      }
       else{
-        if(e[minA]==m_chull.size()-1){
-          e[minA]= 1;  
-        }
-        else{
-          e[minA] = e[minA]+1;
+        e[dupMin] = e[dupMin]+1;
+      }
+      cout<<e[dupMin];
+    }
+    else{
+      cout<<"no duplicate\n";
+      for(int i=0;i<4;i++){
+        if(a[minA] == a[i]){
+          if(e[i]==m_chull.size()-1){
+            e[i]= 1;  
+          }
+          else if(e[i]==m_chull.size()-2){
+            e[i] = 0;
+          }
+          else{
+            e[i] = e[i]+1;
+          }
         }
       }
     }
+    cout<<"before rotation:\n";
     for(int i=0;i<4;i++){
-      if(a[minA] == a[i] && i!=minA){
-        //update extreme points that have the same minimum angle, 
-        //but different with e[minA]
-        if(e[minA]==m_chull.size()-1){
-          e[i]= 1;  
-        }
-        else{
-          e[i] = e[i]+1;
-        }
-
-      }
+      cout<<e[i]<<", ";
     }
+    cout<<"\n";
+    // for(int i=0;i<4;i++){
+    //   if(a[minA] == a[i]){
+    //     //update extreme points that have the same minimum angle
+    //     if(!isDuplicate){
+    //       if(e[i]==m_chull.size()-1){
+    //         e[i]= 1;  
+    //       }
+    //       else if(e[i]==m_chull.size()-2){
+    //         e[i] = 0;
+    //       }
+    //       else{
+    //         e[i] = e[i]+1;
+    //       }
+    //     }
+    //     else{
+    //       cout<<"update "<<e[dupMin]<<"\n";
+    //       //e[minA]= e[minA];
+    //       if(dupMin == i ){
+    //         //cout<<"update "<<e[dupMin]<<"\n";
+    //         if(e[dupMin]==m_chull.size()-1){
+    //           e[dupMin]= 1;  
+    //         }
+    //         else if(e[i]==m_chull.size()-2){
+    //           e[dupMin] = 0;
+    //         }
+    //         else{
+    //           e[dupMin] = e[dupMin]+1;
+    //         }
+    //       }
+          
+    //     }
+        
+
+    //   }
+    //   cout<<e[i]<<", ";
+    // }
+
+    // for(int i=0;i<4;i++){
+    //   if(e[minA] == e[i] && minA!=i){
+    //     //minA must < i (because the search is in order), only update e[i]; no change of e[minA]
+    //     if(e[i]==m_chull.size()-1){
+    //       e[i] = 1;
+    //     }
+    //     else{
+    //       e[i] = e[i]+1;
+    //     }
+    //   }
+    //   //no duplicate vertex or there is a duplicate vertex, 
+    //   //but the angle is not the minimum
+    //   else{
+    //     cout<<"mini e: "<<e[minA];
+    //     if(e[minA]==m_chull.size()-1){
+    //       e[minA]= 1;  
+    //     }
+    //     else{
+    //       e[minA] = e[minA]+1;
+    //     }
+    //   }
+    // }
+    // for(int i=0;i<4;i++){
+    //   if(a[minA] == a[i] && i!=minA){
+    //     //update extreme points that have the same minimum angle, 
+    //     //but different with e[minA]
+    //     if(e[minA]==m_chull.size()-1){
+    //       e[i]= 1;  
+    //     }
+    //     else{
+    //       e[i] = e[i]+1;
+    //     }
+
+    //   }
+    // }
     //rotate the extreme points so that e[minA] occurs first
     int tmpE[4];
+    float tmpA[4];
     for(int i=0;i<4;i++){
-      tmpE[i] = e[(minA+1+i)%4];
+      if(isDuplicate){
+      
+        tmpE[i] = e[(dupMin+i)%4];
+        tmpA[i] = a[(dupMin+i)%4];
+       
+      }
+      else{
+        tmpE[i] = e[(minA+i)%4];
+        tmpA[i] = a[(minA+i)%4];
+        
+      }
+      
     }
     copy(begin(tmpE), end(tmpE), begin(e));
     cout<<"rotate array e:\n";
@@ -292,23 +403,36 @@ obb bbox2d::build(bbox2d_problem & problem)
     for(int i =0;i<4;i++){
       vec[i] = eps2[i]-eps[i];
       Eperp = Vector2d(-vec[i][1],vec[i][0]);
-      
-      if(eps[i][0] == minV || eps[i][0]== maxV){
-        //the extreme point is on v
+
+      if(i%2 == 1){
         a[i] = ((n*Eperp) * (n*Eperp))/ (Eperp.norm()* Eperp.norm());
-        //a[i] = abs(vec[i]*n)/vec[i].norm();
+        //a[i] = abs(vec[i][0]*n[0]+vec[i][1]*n[1])/vec[i].norm();
         cout<<"a: "<<a[i]<<", ";
-        cout<<"the extreme point is on v\n";
-
+      }
+      else{
+        // cosine theta
+        // |v|^2 sin^2
+        a[i] = ((v*Eperp) * (v*Eperp))/ (Eperp.norm()* Eperp.norm());
+        //a[i] = abs(vec[i][0]*v[0]+vec[i][1]*v[1])/vec[i].norm();
+        cout<<"a: "<<a[i]<<", ";
       }
       
-      else if(eps[i][1]==minN || eps[i][1]== maxN){
-        //a[i] = abs(vec[i]*v)/vec[i].norm();
-        a[i] = ((v*Eperp) * (v*Eperp))/ (Eperp.norm()* Eperp.norm());
-        cout<<"a: "<<a[i]<<", ";
-        cout<<"the extreme point is on n\n";
+      // if(eps[i][0] == minV || eps[i][0]== maxV){
+      //   //the extreme point is on v
+      //   a[i] = ((n*Eperp) * (n*Eperp))/ (Eperp.norm()* Eperp.norm());
+      //   //a[i] = abs(vec[i]*n)/vec[i].norm();
+      //   cout<<"a: "<<a[i]<<", ";
+      //   cout<<"the extreme point is on v\n";
 
-      }
+      // }
+      
+      // else if(eps[i][1]==minN || eps[i][1]== maxN){
+      //   //a[i] = abs(vec[i]*v)/vec[i].norm();
+      //   a[i] = ((v*Eperp) * (v*Eperp))/ (Eperp.norm()* Eperp.norm());
+      //   cout<<"a: "<<a[i]<<", ";
+      //   cout<<"the extreme point is on n\n";
+
+      // }
       // else{
       //  //a[i] = ((n*Eperp) * (n*Eperp))/ (Eperp.norm()* Eperp.norm());
       //   //a[i]=0;
