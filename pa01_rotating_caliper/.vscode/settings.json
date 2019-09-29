@@ -3,6 +3,7 @@
         "vector": "cpp",
         "iostream": "cpp",
         "complex": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "algorithm": "cpp"
     }
 }
