@@ -59,13 +59,14 @@ obb bbox2d::build(bbox2d_problem & problem)
   //   cout<<m_chull[i]<<"\n";
   // }
   //cout<<"new hull: \n";
-  cout<<"17: "<<m_chull[17]<<", 18: "<<m_chull[18]<<", 19: "<<m_chull[19];
+  // cout<<"17: "<<m_chull[17]<<", 18: "<<m_chull[18]<<", 19: "<<m_chull[19];
   for (int i =0;i<m_chull.size();i++){
     dif= Vector2d(m_chull[i]-origin);
     newHull[i] = Vector2d(v[0]*dif[0]+v[1]*dif[1],n[0]*dif[0]+n[1]*dif[1]);
     //cout<<newHull[i]<<"\n";
   }
-
+// cout<<"new:\n";
+// cout<<"17: "<<newHull[17]<<", 18: "<<newHull[18]<<", 19: "<<newHull[19];
 //Find vertex indices of extreme points 
   //initialize extreme point to the first vertex of convex hull
   //2. init extreme points e[4] using v & n, compute angles a[4]
@@ -93,7 +94,7 @@ obb bbox2d::build(bbox2d_problem & problem)
       e[3]= i;
     }
   }
-  //m_chull = newHull;
+
   cout<<"extreme points:\n";
   for(int i=0;i<4;i++){
     cout<<"e[i]= "<<e[i]<<", point:"<<m_chull[e[i]]<<"\n";
@@ -101,13 +102,16 @@ obb bbox2d::build(bbox2d_problem & problem)
   //cout<<"e[18]: "<<newHull[18]<<"\n";
   Vector2d Eperp;
   Vector2d zero = Vector2d(0,0);
+
   //compute angles
   for(int i =0;i<4;i++){
     if(e[i] == m_chull.size()-1){
-      vec[i] = newHull[1] - newHull[0];
+      vec[i] = m_chull[1] - m_chull[0];
+      //cout<<e[1]<<" - "<<e[0]<<"\n";
     }
     else{
-      vec[i] = newHull[e[i]+1] - newHull[e[i]];
+      vec[i] = m_chull[e[i]+1] - m_chull[e[i]];
+      //cout<<e[i]+1<< "- "<<e[i]<<"\n";
     }
     
     //cout<<"vec: "<<vec[i]<<", ";
@@ -190,7 +194,6 @@ obb bbox2d::build(bbox2d_problem & problem)
     origin = m_chull[e[minA]+1];
     cout<<"origin index= "<<e[minA]+1<<"\n";
     //cout<<"m_chull[e[minA]]: "<<m_chull[e[minA]] <<"\n";
-    // //update extreme point
     cout<<"old ep index:\n";
     for(int i=0;i<4;i++){
       cout<<e[i]<<", "<<m_chull[e[i]]<<"\n";
@@ -199,61 +202,56 @@ obb bbox2d::build(bbox2d_problem & problem)
     
     Vector2d tmp;
     Vector2d tmp2;
-    if(a[minA]!=0){
-      if(e[minA]==m_chull.size()-1){
-        e[minA]= 1;
-        
+    //update extreme points
+    //check duplicate vertex:
+    for(int i=0;i<4;i++){
+      if(e[minA] == e[i] && minA!=i){
+        //minA must < i, only update e[i]; no change of e[minA]
+        if(e[i]==m_chull.size()-1){
+          e[i] = 1;
+        }
+        else{
+          e[i] = e[i]+1;
+        }
       }
+      //no duplicate vertex or there is a duplicate vertex, 
+      //but the angle is not the minimum
       else{
-        e[minA] = e[minA]+1;
+        if(e[minA]==m_chull.size()-1){
+          e[minA]= 1;  
+        }
+        else{
+          e[minA] = e[minA]+1;
+        }
       }
     }
-    
-    for(int i = 0;i<4; i++){  
-      // cout<<"a[i] = "<<a[i]<<"\n";
-      if(a[minA] == a[i] && i!=minA){// update the extreme points that have smallest angle
-        // if((m_chull[e[i]+1]-m_chull[e[i]+2]).norm() <=1){
-        //   e[i] = e[i]+2;
-        // }
-        
-        //else{
-        
-          if(e[i] == m_chull.size()-1){
-            e[i] =1;
-          }
-          else{
-            e[i] = e[i]+1; // m_chull[e[i]+1] is the end point of the edge
-          }
-        //}
-        
+    for(int i=0;i<4;i++){
+      if(a[minA] == a[i] && i!=minA){
+        //update extreme points that have the same minimum angle, 
+        //but different with e[minA]
+        if(e[minA]==m_chull.size()-1){
+          e[minA]= 1;  
+        }
+        else{
+          e[minA] = e[minA]+1;
+        }
+
       }
-    } 
-    //maintain the extreme order
-    // int key, j;  
-    // float keyA;
-    // for (int i = 1; i < 4; i++) 
-    // {  
-    //     key = e[i];  
-    //     keyA = a[i];
-    //     j = i - 1;  
-    //     while (j >= 0 && e[j] > key) 
-    //     {  
-    //         e[j + 1] = e[j];  
-    //         a[j+1] = a[j];
-    //         j = j - 1;  
-    //     }  
-    //     e[j + 1] = key;  
-    //     a[j+1] = keyA;
-    // }  
+    }
+    //rotate the extreme points so that e[minA] occurs first
+    int tmpE[4];
+    for(int i=0;i<4;i++){
+      tmpE[i] = e[(minA+1+i)%4];
+    }
+    copy(begin(tmpE), end(tmpE), begin(e));
+    cout<<"rotate array e:\n";
+    for(int i=0;i<4;i++){
+      cout<<e[i]<<", ";
+    }
+
     
-    // for(int i=0;i<4;i++){
-    //   if(i!=minA){
-    //     if(m_chull[e[i]][0]-origin[0]<=0.1 &&
-    //      m_chull[e[i]][1]-origin[1]<=0.1){
-    //        e[i] = e[i]+1;
-    //      }
-    //   }
-    // }
+  
+      
 
     Point2d eps[4];
     Point2d eps2[4];
@@ -304,7 +302,7 @@ obb bbox2d::build(bbox2d_problem & problem)
 
       }
       
-      if(eps[i][1]==minN || eps[i][1]== maxN){
+      else if(eps[i][1]==minN || eps[i][1]== maxN){
         //a[i] = abs(vec[i]*v)/vec[i].norm();
         a[i] = ((v*Eperp) * (v*Eperp))/ (Eperp.norm()* Eperp.norm());
         cout<<"a: "<<a[i]<<", ";
@@ -392,7 +390,7 @@ obb bbox2d::createOBB(int e[4],const mathtool::Vector2d& v, const mathtool::Vect
 
     eps[i] = Point2d(Vn[0]*diff[0]+Vn[1]*diff[1],Nn[0]*diff[0]+Nn[1]*diff[1]);
     //cout<<eps[i]<<"\n";
-    // cout<<"diff: "<<diff<<"\n";
+    cout<<"diff: "<<diff<<"\n";
   }
 
   
