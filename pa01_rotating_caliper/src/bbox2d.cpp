@@ -230,10 +230,10 @@ obb bbox2d::build(bbox2d_problem & problem)
         //update extreme points that have the same minimum angle, 
         //but different with e[minA]
         if(e[minA]==m_chull.size()-1){
-          e[minA]= 1;  
+          e[i]= 1;  
         }
         else{
-          e[minA] = e[minA]+1;
+          e[i] = e[i]+1;
         }
 
       }
