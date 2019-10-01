@@ -13,7 +13,7 @@ namespace polygon{
 using namespace std;
 
 
-inline float isLeft(Point2d P0, Point2d P1,Point2d P2 ){
+float isLeft(Point2d P0, Point2d P1,Point2d P2 ){
   return (P1[0] - P0[0])*(P2[1] - P0[1]) - (P2[0] - P0[0])*(P1[1] - P0[1]);
 
 }
@@ -47,11 +47,11 @@ void hull2d(ply_vertex * s, ply_vertex * e, list<ply_vertex*>& hull )
   auto & P2 = s->getNext()->getNext()->getPos();
   if (isLeft(P0, P1, P2) > 0) {
     D[bot+1] = s;
-    D[bot+2] = s->getNext();           // ccw vertices are: 2,0,1,2
+    D[bot+2] = s->getNext();           
   }
   else {
     D[bot+1] = s->getNext();
-    D[bot+2] = s;          // ccw vertices are: 2,1,0,2
+    D[bot+2] = s;       
   }
   // compute the hull on the deque D[]
   v = s->getNext()->getNext();
@@ -72,10 +72,6 @@ void hull2d(ply_vertex * s, ply_vertex * e, list<ply_vertex*>& hull )
       --top;
     }
     D[++top] = v;
-    
-    // for(int k =0; k<=(top-bot);k++){
-    //   cout<<D[bot+k]->getPos()<<"\n";
-    // }
     
   }
   int h;
