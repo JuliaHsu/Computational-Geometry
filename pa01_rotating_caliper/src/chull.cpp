@@ -13,10 +13,6 @@ namespace polygon{
 using namespace std;
 
 
-float isLeft(Point2d P0, Point2d P1,Point2d P2 ){
-  return (P1[0] - P0[0])*(P2[1] - P0[1]) - (P2[0] - P0[0])*(P1[1] - P0[1]);
-
-}
 
 //
 //s and e are the start and the end vertices of the polygon
@@ -45,7 +41,7 @@ void hull2d(ply_vertex * s, ply_vertex * e, list<ply_vertex*>& hull )
   auto & P0 =s->getPos();
   auto & P1 =s->getNext()->getPos();
   auto & P2 = s->getNext()->getNext()->getPos();
-  if (isLeft(P0, P1, P2) > 0) {
+  if ((P1[0] - P0[0])*(P2[1] - P0[1]) - (P2[0] - P0[0])*(P1[1] - P0[1]) > 0) {
     D[bot+1] = s;
     D[bot+2] = s->getNext();           
   }
@@ -56,28 +52,51 @@ void hull2d(ply_vertex * s, ply_vertex * e, list<ply_vertex*>& hull )
   // compute the hull on the deque D[]
   v = s->getNext()->getNext();
   auto & Pt = v->getPos();
-  
+  Vector3d b1, b2, t1, t2;
   for(int i = 3; i<n;i++){
     v = v->getNext();
     auto & Pt = v->getPos();
-    if(isLeft(D[bot]->getPos(),D[bot+1]->getPos(),Pt)>0 && 
-    isLeft(D[top-1]->getPos(),D[top]->getPos(),Pt)>0){
+    Point2d B0 = D[bot]->getPos();
+    Point2d B1 = D[bot+1]->getPos();
+    Point2d T0 = D[top-1]->getPos();
+    Point2d T1 = D[top]->getPos();
+
+    if(((B1[0] - B0[0])*(Pt[1] - B0[1])-((Pt[0]-B0[0])*(B1[1]-B0[1]))) >0 && ((T1[0]-T0[0])*(Pt[1]-T0[1])-(Pt[0]-T0[0])*(T1[1]-T0[1]))>0){
       continue;
     }
-    while(isLeft(D[bot]->getPos(),D[bot+1]->getPos(),Pt)<=0){
+    while(((B1[0] - B0[0])*(Pt[1] - B0[1])-((Pt[0]-B0[0])*(B1[1]-B0[1]))) <=0){
       ++bot;
+      B0 = D[bot]->getPos();
+      B1 = D[bot+1]->getPos();
     }
-    D[--bot] = v;
-    while(isLeft(D[top-1]->getPos(),D[top]->getPos(),Pt)<=0){
+     D[--bot] = v;
+    while(((T1[0]-T0[0])*(Pt[1]-T0[1])-(Pt[0]-T0[0])*(T1[1]-T0[1]))<=0){
       --top;
+      T0 = D[top-1]->getPos();
+      T1 = D[top]->getPos();
     }
     D[++top] = v;
+    // if(isLeft(D[bot]->getPos(),D[bot+1]->getPos(),Pt)>0 && 
+    // isLeft(D[top-1]->getPos(),D[top]->getPos(),Pt)>0){
+    //   continue;
+    // }
+    // while(isLeft(D[bot]->getPos(),D[bot+1]->getPos(),Pt)<=0){
+    //   ++bot;
+    // }
+    // D[--bot] = v;
+    // while(isLeft(D[top-1]->getPos(),D[top]->getPos(),Pt)<=0){
+    //   --top;
+    // }
+    // D[++top] = v;
     
   }
   int h;
   
   for(h=0;h<=(top-bot);h++){
     hull.push_back(D[bot+h]);
+  }
+  for(ply_vertex* v:hull){
+    cout<<v->getPos()<<"\n";
   }
   
 
