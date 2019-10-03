@@ -24,20 +24,16 @@ void hull2d(ply_vertex * s, ply_vertex * e, list<ply_vertex*>& hull )
   
   ply_vertex* v= s->getNext();
   // n = total number of vertices
-  // auto & pos=v->getPos();
-  // cout<<  pos;
   int n = 1;
   while(v!=s){
     n++;
     v=v->getNext();
   }
  
-
-  // initialize a deque D[] from bottom to top so that the
-
   ply_vertex** D = new ply_vertex*[2*n+1];
   int bot = n-2, top = bot+3;
   D[bot] = D[top] = s->getNext()->getNext();
+  // put the first three vertices in to D. (ccw)
   auto & P0 =s->getPos();
   auto & P1 =s->getNext()->getPos();
   auto & P2 = s->getNext()->getNext()->getPos();
@@ -51,8 +47,7 @@ void hull2d(ply_vertex * s, ply_vertex * e, list<ply_vertex*>& hull )
   }
   // compute the hull on the deque D[]
   v = s->getNext()->getNext();
-  auto & Pt = v->getPos();
-  Vector3d b1, b2, t1, t2;
+
   for(int i = 3; i<n;i++){
     v = v->getNext();
     auto & Pt = v->getPos();
@@ -76,18 +71,6 @@ void hull2d(ply_vertex * s, ply_vertex * e, list<ply_vertex*>& hull )
       T1 = D[top]->getPos();
     }
     D[++top] = v;
-    // if(isLeft(D[bot]->getPos(),D[bot+1]->getPos(),Pt)>0 && 
-    // isLeft(D[top-1]->getPos(),D[top]->getPos(),Pt)>0){
-    //   continue;
-    // }
-    // while(isLeft(D[bot]->getPos(),D[bot+1]->getPos(),Pt)<=0){
-    //   ++bot;
-    // }
-    // D[--bot] = v;
-    // while(isLeft(D[top-1]->getPos(),D[top]->getPos(),Pt)<=0){
-    //   --top;
-    // }
-    // D[++top] = v;
     
   }
   int h;
@@ -95,15 +78,7 @@ void hull2d(ply_vertex * s, ply_vertex * e, list<ply_vertex*>& hull )
   for(h=0;h<=(top-bot);h++){
     hull.push_back(D[bot+h]);
   }
-  for(ply_vertex* v:hull){
-    cout<<v->getPos()<<"\n";
-  }
-  
-
-  
-
- 
-
+  delete D;
   
 }
 

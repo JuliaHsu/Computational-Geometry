@@ -29,12 +29,16 @@ obb bbox2d::build(bbox2d_problem & problem)
   int e[4]; //vertex indices of extreme points
   float a[4]; //angles between the calipers and the polygon edges
   int minA =0;
+  bool processed [m_chull.size()-1];
+  for(int i = 0;i<m_chull.size()-1;i++){
+    processed[i]=false;
+  }
   //1. initialize v so it is parallel to an edge and then determine n
   //e0
   v = Vector2d(m_chull[1]-m_chull[0]);
   // v & n are perpendicular
   n = Vector2d(-v[1],v[0]);
-  
+  processed[0] = true;
   vector<mathtool::Point2d> newHull = m_chull;
   Point2d origin = m_chull[1];
   Vector2d diff;
@@ -51,7 +55,7 @@ obb bbox2d::build(bbox2d_problem & problem)
   for (int i=0;i<4;i++){
     e[i] = 1;
   }
-  for (int i =0; i<newHull.size()-1;i++){
+  for (int i =1; i<newHull.size()-1;i++){
     
     if (newHull[i][0]>newHull[e[1]][0] || 
     (newHull[i][0] == newHull[e[1]][0] && newHull[i][1]>newHull[e[1]][1])){
@@ -116,12 +120,14 @@ obb bbox2d::build(bbox2d_problem & problem)
 
     //3.3 update v,n,e[4],a[4]
     minA = findAngles(e,a,v,n);
-    
+    if(processed[e[minA]]){
+      break;
+    }
     v =m_chull[e[minA]+1]-m_chull[e[minA]];
     //v = v.normalize();
     n = Vector2d(-v[1],v[0]);
     origin = m_chull[e[minA]+1];
-
+    processed[e[minA]] = true;
     //update extreme points
     for(int i=0;i<4;i++){
         if(a[minA] == a[i]){
