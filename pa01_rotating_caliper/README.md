@@ -1,4 +1,4 @@
-#Project 1: Rotating Caliper for Computing the Bounding Boxes
+# Project 1: Rotating Caliper for Computing the Bounding Boxes
 Hsin-Ping HSU (G01167652)
 
 1. c_hull.cpp: implement Melkman Algorithm to compute convex hull of 2D simple polygons.
