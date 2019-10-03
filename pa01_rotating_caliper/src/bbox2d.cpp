@@ -222,15 +222,7 @@ obb bbox2d::createOBB(int e[4],const mathtool::Vector2d& v, const mathtool::Vect
   Vector2d diff;
   Point2d eps[4];
   Point2d origin ;
-  Vector2d tmp;
-  
-  for(int i =0;i<4;i++){
-    //find origin
-    tmp= Vector2d(m_chull[e[i]]-m_chull[e[i]-1]);
-    if(tmp ==v){
-      origin = m_chull[e[i]];
-    }
-  }
+  origin = m_chull[e[0]];
   Vector2d Vn= v.normalize();
   Vector2d Nn = n.normalize();
 
