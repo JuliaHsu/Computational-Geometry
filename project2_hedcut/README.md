@@ -39,10 +39,12 @@ The report of this project is enclosed in the report folder, which contains the 
 
 4. Adjust the radi of the disks by considering the contrast of the image
 
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry1_random.png" height="300">
+
 <img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry1_contrast.png" height="300">
 
   
-To run the code, try this in hedcuter folder:
+### To run the code, try this in hedcuter folder:
 
 > ./code/build/hedcuter  -n 10000 -iteration 10 images/einstein-medium.jpg
 
