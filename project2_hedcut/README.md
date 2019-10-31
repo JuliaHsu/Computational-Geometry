@@ -9,7 +9,7 @@ The report of this project is enclosed in the report folder, which contains the 
 
 1.Improve the distribution of the disks with subpixel
 
-![Original Image](https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry3.jpg)
+![Original Image](https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry3.jpg | width=100)
 ![without using subpixel](https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry3-10000_random.png)
 ![improvement with subpixel](https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry3-10000_random_sub.png)
 
