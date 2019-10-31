@@ -9,37 +9,37 @@ The report of this project is enclosed in the report folder, which contains the 
 
 1.Improve the distribution of the disks with subpixel
 
-<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry3.jpg" height="24">
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry3.jpg" height="100">
 
-<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry3-10000_random.png" height="24">
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry3-10000_random.png" height="100">
 
-<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry3-10000_random_sub.png" height="24">
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry3-10000_random_sub.png" height="100">
 
 
 
 2. Extract features of input image
 
-<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2.jpg" height="24">
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2.jpg" height="100">
 
-<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2_random.png" height="24">
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2_random.png" height="100">
 
-<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2_edge.png" height="24">
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2_edge.png" height="100">
 
 
 3. Generate colorful disks
 
-<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2.jpg" height="24">
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2.jpg" height="100">
 
-<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2_color.png" height="24">
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2_color.png" height="100">
 
-<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry1.jpg" height="24">
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry1.jpg" height="100">
 
-<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry1_color.png" height="24">
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry1_color.png" height="100">
 
 
 4. Adjust the radi of the disks by considering the contrast of the image
 
-<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry1_contrast.png" height="24">
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry1_contrast.png" height="100">
 
   
 To run the code, try this in hedcuter folder:
