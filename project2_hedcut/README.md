@@ -28,18 +28,18 @@ The report of this project is enclosed in the report folder, which contains the 
 
 3. Generate colorful disks
 
-<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2.jpg" height="100">
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2.jpg" height="200">
 
-<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2_color.png" height="100">
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2_color.png" height="200">
 
-<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry1.jpg" height="100">
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry1.jpg" height="200">
 
-<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry1_color.png" height="100">
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry1_color.png" height="200">
 
 
 4. Adjust the radi of the disks by considering the contrast of the image
 
-<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry1_contrast.png" height="100">
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry1_contrast.png" height="200">
 
   
 To run the code, try this in hedcuter folder:
