@@ -2,4 +2,7 @@
 Instructor: Jyh-Ming Lien
 
 * Project 1: [Rotating Caliper for Computing the Bounding Boxes](https://github.com/JuliaHsu/Computational-Geometry/tree/master/pa01_rotating_caliper)
+ 
+* Project 2: [Hedcut Generator](https://github.com/JuliaHsu/Computational-Geometry/tree/master/project2_hedcut)
+
 
