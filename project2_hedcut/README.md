@@ -9,26 +9,37 @@ The report of this project is enclosed in the report folder, which contains the 
 
 1.Improve the distribution of the disks with subpixel
 
-![Original Image](https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry3.jpg){:height="50%" width="50%"}
-![without using subpixel](https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry3-10000_random.png){:height="50%" width="50%"}
-![improvement with subpixel](https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry3-10000_random_sub.png){:height="50%" width="50%"}
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry3.jpg" height="24">
+
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry3-10000_random.png" height="24">
+
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry3-10000_random_sub.png" height="24">
+
 
 
 2. Extract features of input image
-![Original Image](https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2.jpg){:height="50%" width="50%"}
-![without Canny Edge Detector](https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2_random.png){:height="50%" width="50%"}
-![with Canny Edge Detector](https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2_edge.png){:height="50%" width="50%"}
+
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2.jpg" height="24">
+
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2_random.png" height="24">
+
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2_edge.png" height="24">
+
 
 3. Generate colorful disks
 
-![Original Image](https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2.jpg){:height="50%" width="50%"}
-![Color Disks](https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2_color.png){:height="50%" width="50%"}
-![Original Image](https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry1.jpg){:height="50%" width="50%"}
-![Color Disks](https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry1_color.png){:height="50%" width="50%"}
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2.jpg" height="24">
+
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry2_color.png" height="24">
+
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry1.jpg" height="24">
+
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry1_color.png" height="24">
+
 
 4. Adjust the radi of the disks by considering the contrast of the image
-![ Stipples with different size of disks](https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry1_contrast.png){:height="50%" width="50%"}
 
+<img src="https://github.com/JuliaHsu/Computational-Geometry/blob/master/project2_hedcut/report/image/harry1_contrast.png" height="24">
 
   
 To run the code, try this in hedcuter folder:
