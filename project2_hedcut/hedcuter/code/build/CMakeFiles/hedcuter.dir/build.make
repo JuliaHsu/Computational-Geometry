@@ -43,10 +43,10 @@ RM = /usr/local/Cellar/cmake/3.15.4/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code
+CMAKE_SOURCE_DIR = /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/build
+CMAKE_BINARY_DIR = /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/hedcuter.dir/depend.make
@@ -59,42 +59,42 @@ include CMakeFiles/hedcuter.dir/flags.make
 
 CMakeFiles/hedcuter.dir/hedcut.cpp.o: CMakeFiles/hedcuter.dir/flags.make
 CMakeFiles/hedcuter.dir/hedcut.cpp.o: ../hedcut.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/hedcuter.dir/hedcut.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hedcuter.dir/hedcut.cpp.o -c /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/hedcut.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/hedcuter.dir/hedcut.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hedcuter.dir/hedcut.cpp.o -c /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/hedcut.cpp
 
 CMakeFiles/hedcuter.dir/hedcut.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hedcuter.dir/hedcut.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/hedcut.cpp > CMakeFiles/hedcuter.dir/hedcut.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/hedcut.cpp > CMakeFiles/hedcuter.dir/hedcut.cpp.i
 
 CMakeFiles/hedcuter.dir/hedcut.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hedcuter.dir/hedcut.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/hedcut.cpp -o CMakeFiles/hedcuter.dir/hedcut.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/hedcut.cpp -o CMakeFiles/hedcuter.dir/hedcut.cpp.s
 
 CMakeFiles/hedcuter.dir/main.cpp.o: CMakeFiles/hedcuter.dir/flags.make
 CMakeFiles/hedcuter.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/hedcuter.dir/main.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hedcuter.dir/main.cpp.o -c /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/hedcuter.dir/main.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hedcuter.dir/main.cpp.o -c /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/main.cpp
 
 CMakeFiles/hedcuter.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hedcuter.dir/main.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/main.cpp > CMakeFiles/hedcuter.dir/main.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/main.cpp > CMakeFiles/hedcuter.dir/main.cpp.i
 
 CMakeFiles/hedcuter.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hedcuter.dir/main.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/main.cpp -o CMakeFiles/hedcuter.dir/main.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/main.cpp -o CMakeFiles/hedcuter.dir/main.cpp.s
 
 CMakeFiles/hedcuter.dir/wcvt.cpp.o: CMakeFiles/hedcuter.dir/flags.make
 CMakeFiles/hedcuter.dir/wcvt.cpp.o: ../wcvt.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/hedcuter.dir/wcvt.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hedcuter.dir/wcvt.cpp.o -c /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/wcvt.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/hedcuter.dir/wcvt.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/hedcuter.dir/wcvt.cpp.o -c /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/wcvt.cpp
 
 CMakeFiles/hedcuter.dir/wcvt.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/hedcuter.dir/wcvt.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/wcvt.cpp > CMakeFiles/hedcuter.dir/wcvt.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/wcvt.cpp > CMakeFiles/hedcuter.dir/wcvt.cpp.i
 
 CMakeFiles/hedcuter.dir/wcvt.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/hedcuter.dir/wcvt.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/wcvt.cpp -o CMakeFiles/hedcuter.dir/wcvt.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/wcvt.cpp -o CMakeFiles/hedcuter.dir/wcvt.cpp.s
 
 # Object files for target hedcuter
 hedcuter_OBJECTS = \
@@ -158,7 +158,7 @@ hedcuter: /usr/local/lib/libopencv_photo.4.1.2.dylib
 hedcuter: /usr/local/lib/libopencv_imgproc.4.1.2.dylib
 hedcuter: /usr/local/lib/libopencv_core.4.1.2.dylib
 hedcuter: CMakeFiles/hedcuter.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable hedcuter"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable hedcuter"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/hedcuter.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -171,6 +171,6 @@ CMakeFiles/hedcuter.dir/clean:
 .PHONY : CMakeFiles/hedcuter.dir/clean
 
 CMakeFiles/hedcuter.dir/depend:
-	cd /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/build /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/build /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/build/CMakeFiles/hedcuter.dir/DependInfo.cmake --color=$(COLOR)
+	cd /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/build /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/build /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/build/CMakeFiles/hedcuter.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/hedcuter.dir/depend
 

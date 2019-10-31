@@ -6,17 +6,17 @@
 
 #IncludeRegexTransform: 
 
-/Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/hedcut.cpp
+/Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/hedcut.cpp
 hedcut.h
-/Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/hedcut.h
+/Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/hedcut.h
 time.h
 -
 
-/Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/hedcut.h
+/Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/hedcut.h
 wcvt.h
-/Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/wcvt.h
+/Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/wcvt.h
 
-/Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/wcvt.h
+/Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/wcvt.h
 list
 -
 string

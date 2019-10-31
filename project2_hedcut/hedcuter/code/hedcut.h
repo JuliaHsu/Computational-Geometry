@@ -25,6 +25,7 @@ public:
 	Hedcut();
 
 	bool build(cv::Mat & input_image, int n);
+	bool build_edge(cv::Mat & input_image, int n);
 
 	const std::list<HedcutDisk> & getDisks() const { return disks;  }
 

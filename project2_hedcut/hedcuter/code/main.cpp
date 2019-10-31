@@ -30,6 +30,7 @@ int main(int argc, char ** argv)
 	}
 
 	Hedcut hedcut;
+	Hedcut hedcut_edge;
 	bool debug = false;                //output debugging information
 	int sample_size = 1000;
 
@@ -67,8 +68,12 @@ int main(int argc, char ** argv)
 	//
 	//compute hedcut
 	//
-
-	if (hedcut.build(image, sample_size) == false)
+	int w = image.size().width *2;
+	int h = image.size().height*2;
+	cv::Size res(w, h);
+	cv::Mat resizedImg(res.width, res.height, cv::IMREAD_GRAYSCALE);
+	cv::resize(image, resizedImg, res, 0, 0, cv::INTER_LINEAR);
+	if (hedcut.build(resizedImg, sample_size) == false)
 		cerr << "! Error: Failed to build hedcut. Sorry." << endl;
 
 	if (debug)
@@ -76,15 +81,22 @@ int main(int argc, char ** argv)
 		cout << "- Generated " << hedcut.getDisks().size() << " disks" << endl;
 	}
 
+	// if (hedcut_edge.build_edge(resizedImg, sample_size) == false)
+	// 	cerr << "! Error: Failed to build hedcut. Sorry." << endl;
+
+	// if (debug)
+	// {
+	// 	cout << "- Generated " << hedcut_edge.getDisks().size() << " disks" << endl;
+	// }
+
 	//
 	//save output to svg
 	//
 	stringstream ss;
 	string img_name = getImageName(img_filename);
 	ss << img_name << "-" << sample_size << ".svg";
-	svg::Dimensions dimensions(image.size().width, image.size().height);
+	svg::Dimensions dimensions(image.size().width,image.size().height);
 	svg::Document doc(ss.str(), svg::Layout(dimensions, svg::Layout::TopLeft));
-
 	for (auto& disk : hedcut.getDisks())
 	{
 		uchar r = disk.color.val[0];
@@ -94,6 +106,14 @@ int main(int argc, char ** argv)
 		svg::Circle circle(svg::Point(disk.center.x, disk.center.y), disk.radius * 2, svg::Fill(color));
 		doc << circle;
 	}//end for i
+	// for(auto & disk: hedcut_edge.getDisks()){
+	// 	uchar r = disk.color.val[0];
+	// 	uchar g = disk.color.val[1];
+	// 	uchar b = disk.color.val[2];
+	// 	svg::Color color(r, g, b);
+	// 	svg::Circle circle(svg::Point(disk.center.x, disk.center.y), disk.radius * 2, svg::Fill(color));
+	// 	doc<<circle;
+	// }
 
 	doc.save();
 
@@ -101,6 +121,5 @@ int main(int argc, char ** argv)
 	{
 		cout << "- Saved " << ss.str() << endl;
 	}
-
 	return 0;
 }

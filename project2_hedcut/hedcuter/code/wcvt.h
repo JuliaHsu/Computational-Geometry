@@ -21,6 +21,8 @@
 #include <opencv2/video/video.hpp>
 #include <opencv2/features2d/features2d.hpp>
 
+
+
 struct VorCell
 {
 	VorCell(){}
@@ -51,7 +53,7 @@ public:
 	}
 
 	void compute_weighted_cvt(cv::Mat &  img, std::vector<cv::Point2d> & pts);
-
+	
 	const std::vector<VorCell> & getCells() const
 	{
 		return this->cells;
@@ -65,15 +67,20 @@ public:
 private:
 
 	static std::vector<VorCell> cells;
-
-	void vor(cv::Mat &  img);
+	void vor_sub(cv::Mat & img);
+	void vor(cv::Mat &  img); 
 
 	//convert a color intensity to distance between 0~1
-	inline float color2dist(cv::Mat &  img, cv::Point& p)
+	inline float color2dist(cv::Mat &  img, cv::Point & p)
 	{
 		//note: 256 is used here instead of 255 to prevent 0 distance.
 		//black =0; white = 255
 		
+		// cv::Mat dst;
+		// cv::Point2f pt(p.y, p.x);
+		// cv::getRectSubPix(img,cv::Size(1,1),pt,dst);
+		// std::cout<<int(img.at<uchar>(p.x,p.y))<<std::endl;
+		// std::cout<<int(dst.at<uchar>(0,0))<<std::endl;
 		
 		// return (256 - dst.at<uchar>(0,0))*1.0f / 256;
 		
@@ -88,19 +95,23 @@ private:
 		if (cell.coverage.empty()) std::cout << "! Error: cell.coverage " << cell.site << " size = " << cell.coverage.size() << std::endl;
 
 		//Generate virtual high resolution image;
+		
 		cv::Size res(img.size().width, img.size().height);
-		cv::Mat resizedImg(res.width, res.height, cv::IMREAD_GRAYSCALE);
-		cv::resize(img, resizedImg, res, 0, 0, cv::INTER_LINEAR);
-
+		// cv::Mat resizedImg(res.width, res.height, cv::IMREAD_GRAYSCALE);
+		// cv::resize(img, resizedImg, res, 0, 0, cv::INTER_LINEAR);
+		// cv::Point2f pt(res.width/2, res.height/2);
+		// cv::getRectSubPix(resizedImg,res,pt,resizedImg);
 		//compute weighted average
 		float total = 0;
 		cv::Point2d new_pos(0, 0);
 		//cell.coverage: the points in the cell c
 		for (auto& c : cell.coverage)
 		{
-			float d = color2dist(resizedImg, c);
+			float d = color2dist(img, c);
+			//indtegral of density * position
 			new_pos.x += d*c.x;
 			new_pos.y += d*c.y;
+			//integral of density
 			total += d;
 		}
 
@@ -146,4 +157,7 @@ private:
 		}
 		return max_offset;
 	}
+
+
+	
 };

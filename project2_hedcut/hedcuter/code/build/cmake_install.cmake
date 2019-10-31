@@ -1,4 +1,4 @@
-# Install script for directory: /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code
+# Install script for directory: /Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcut/hedcuter/code/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/julia/Documents/GeorgeMason/Fall_2019/CS633/HW/project2_hedcut/hedcuter/code/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
